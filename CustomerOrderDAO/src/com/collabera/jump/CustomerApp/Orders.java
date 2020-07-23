@@ -79,11 +79,11 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return "Order Number: " + orderNum 
-				+ ", Customer Number: " + customerNum 
-				+ ", Product Code: " + productCode
-				+ ", Order Price: " + orderPrice 
-				+ ", Order Quantity: " + orderQuantity;
+		return "<tr><td>" + orderNum 
+				+ "</td><td>" + customerNum 
+				+ "</td><td>" + productCode
+				+ "</td><td>" + orderPrice 
+				+ "</td><td>" + orderQuantity + "</td></tr>";
 	}
 	
 	

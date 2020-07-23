@@ -63,12 +63,18 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer Number: " + customerNum 
-				+ ", Customer Name: " + customerName 
-				+ ", Address: " + address
-				+ ", City: " + city 
-				+ ", Country: " + country;
+		return "<tr><td>" + customerNum 
+				+ "</td><td>" + customerName 
+				+ "</td><td>" + address
+				+ "</td><td>" + city 
+				+ "</td><td>" + country + "</td></tr>";
 	}
 	
-	
+//	public String toString() {
+//		return "Customer Number: " + customerNum 
+//				+ ", Customer Name: " + customerName 
+//				+ ", Address: " + address
+//				+ ", City: " + city 
+//				+ ", Country: " + country;
+//	}
 }

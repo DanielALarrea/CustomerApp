@@ -15,7 +15,8 @@ public class ConnectionFactory {
 	{
 		try {
 			Properties prop = new Properties();
-			String configName = "CustomerOrderDAO/resources/customerapp.config";
+			//String configName = "CustomerOrderDAO/resources/customerapp.config";
+			String configName = "D:/GitHub Repos/CustomerApp/WebContent/WEB-INF/customerapp.config";
 			FileInputStream fis = new FileInputStream(configName);
 			prop.load(fis);
 			fis.close();
