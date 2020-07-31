@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.collabera.jump.CustomerApp.CustomerAppDAO;
 import com.collabera.jump.CustomerApp.CustomerAppDAOClass;
+import com.collabera.jump.CustomerApp.Orders;
 import com.collabera.jump.CustomerApp.Product;
 
 /**
- * Servlet implementation class UpdateProductServe
+ * Servlet implementation class InsertProductServe
  */
-@WebServlet("/UpdateProductServe")
-public class UpdateProductServe extends HttpServlet {
+@WebServlet("/InsertProductServe")
+public class InsertProductServe extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateProductServe() {
+    public InsertProductServe() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,19 +36,30 @@ public class UpdateProductServe extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		CustomerAppDAO cuAppDAO = new CustomerAppDAOClass();
 		
-		int updateProCode = 0;
-		int newQuantity = 0;
+		int productCode = 0;
+		String productName = "";
+		int productPrice = 0;
+		int productQuantity = 0;
+				
+		if (request.getParameter("productCode") != null) {
+			productCode = Integer.valueOf(request.getParameter("productCode"));
+		}
+		
+		if (request.getParameter("productName") != null) {
+			productName = request.getParameter("productName");
+		}
+		
+		if (request.getParameter("productPrice") != null) {
+			productPrice = Integer.valueOf(request.getParameter("productPrice"));
+		}
+		
+		if (request.getParameter("productQuantity") != null) {
+			productQuantity = Integer.valueOf(request.getParameter("productQuantity"));
+		}
 		
 		if (request.getParameter("productCode") != null) {
-			updateProCode = Integer.valueOf(request.getParameter("productCode"));
-		}
-		if (request.getParameter("quantity") != null) {
-			newQuantity = Integer.valueOf(request.getParameter("quantity"));
-		}
-		
-		if (request.getParameter("productCode") != null) {
-			if (cuAppDAO.updateProductQuantity(updateProCode, newQuantity)) {
-				System.out.println("Product " + updateProCode + " was updated to have Quantity " + newQuantity);
+			if (cuAppDAO.insertNewProduct(productCode, productName, productPrice, productQuantity)) {
+				System.out.println("New Product added");
 			}
 		}
 		
@@ -68,25 +80,15 @@ public class UpdateProductServe extends HttpServlet {
 		
 		out.println("</table>");
 		
-			
-		
-		out.println("<form name=updateProductForm action=UpdateProductServe method=GET>");
-		out.println("<table><th>Product Code</th><th>Quantity</th>");
+		out.println("<form name=insertProductForm action=InsertProductServe method=GET>");
+		out.println("<table><th>Product Code</th><th>Product Name</th><th>Product Price</th><th>Product Quantity</th>");
 			out.println("<tr><td><input type=number name=productCode required></td>");
-			out.println("<td><input type=number name=quantity required></td>");
-			out.println("<td><input type=submit value=Update></td></tr>");
+			out.println("<td><input type=text name=productName required></td>");
+			out.println("<td><input type=number name=productPrice required></td>");
+			out.println("<td><input type=number name=productQuantity required></td>");
+			out.println("<td><input type=submit value=Insert></td></tr>");
 		out.println("</form>");
-		
-		
-		
-//		System.out.println("Please enter the Product Code you would like to update: ");
-//		updateProCode = scan.nextInt();
-//		System.out.println("Please enter the new quantity of product " + updateProCode + ":");
-//		newQuantity = scan.nextInt();
-//		if (cuAppDAO.updateProductQuantity(updateProCode, newQuantity)) {
-//			System.out.println("Product " + updateProCode + " was updated to have Quantity " + newQuantity);
-//		}
-		
+				
 		out.println("</body></html>");
 	}
 

@@ -37,8 +37,7 @@ public class DeleteOrderServe extends HttpServlet {
 		CustomerAppDAO cuAppDAO = new CustomerAppDAOClass();
 		
 		int deleteCustomerName = 0;
-		int deleteProCode = 0;	
-		
+		int deleteProCode = 0;
 		
 		if (request.getParameter("customerCode") != null) {
 			deleteCustomerName = Integer.valueOf(request.getParameter("customerCode"));
@@ -46,8 +45,6 @@ public class DeleteOrderServe extends HttpServlet {
 		if (request.getParameter("productCode") != null) {
 			deleteProCode = Integer.valueOf(request.getParameter("productCode"));
 		}
-//		deleteCustomerName = Integer.valueOf(request.getParameter("customerCode"));
-//		deleteProCode = Integer.valueOf(request.getParameter("productCode"));
 		
 		if (request.getParameter("customerCode") != null) {
 			cuAppDAO.deleteAllOrdersByCustomer(deleteCustomerName, deleteProCode);
@@ -56,7 +53,9 @@ public class DeleteOrderServe extends HttpServlet {
 		out.println("<html><body>");
 		out.println("<center><table>"
 				+ "<th><a href=CustomerAppHubServe>Hub</a></th>"
+				+ "<th><a href=InsertProductServe>Insert New Product</a></th>"
 				+ "<th><a href=UpdateProductServe>Update Product Quantity</a></th>"
+				+ "<th><a href=InsertOrderServe>Insert New Orders</a></th>"
 				+ "<th><a href=DeleteOrderServe>Delete Orders</a></th>"
 				+ "</table></center>");
 		
@@ -66,18 +65,12 @@ public class DeleteOrderServe extends HttpServlet {
 			out.println(or);
 		}
 		
-		
-		
-		out.println("<form name=updateProductForm action=DeleteOrderServe method=GET>");
+		out.println("<form name=deleteOrderForm action=DeleteOrderServe method=GET>");
 		out.println("<table><th>Customer Code</th><th>Product Code</th>");
 			out.println("<tr><td><input type=number name=customerCode required></td>");
 			out.println("<td><input type=number name=productCode required></td>");
 			out.println("<td><input type=submit value=Delete></td></tr>");
 		out.println("</form>");
-		
-		
-		
-		//cuAppDAO.deleteAllOrdersByCustomer(deleteCustomerName, deleteProCode);
 		
 		out.println("</table>");
 		

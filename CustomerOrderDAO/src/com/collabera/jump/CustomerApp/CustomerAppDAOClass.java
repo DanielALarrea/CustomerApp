@@ -105,6 +105,58 @@ public class CustomerAppDAOClass implements CustomerAppDAO {
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean insertNewOrder(int orderCode, int customerCode, int productCode, int orderPrice, int orderQuantity) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("insert into orders "
+					+ "(ordernumber, customernumber, productcode, orderprice, orderquantity) values (?, ?, ?, ?, ?)");
+			ps.setInt(1, orderCode);
+			ps.setInt(2, customerCode);
+			ps.setInt(3, productCode);
+			ps.setInt(4, orderPrice);
+			ps.setInt(5, orderQuantity);
+
+			int i = ps.executeUpdate();
+
+			if(i == 1) {
+				return true;
+			}
+//			connection.close();
+			ps.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean insertNewProduct(int productCode, String productName, int productPrice, int productQuantity) {
+		Connection connection = ConnectionFactory.getConnection();
+		try {
+			System.out.println(productCode + ", " + productName + ", " + productPrice + ", " + productQuantity);
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO product "
+					+ "(productcode, productname, productprice, productquantity) VALUES (?, ?, ?, ?)");
+			ps.setInt(1, productCode);
+			ps.setString(2, productName);
+			ps.setInt(3, productPrice);
+			ps.setInt(4, productQuantity);
+
+			int i = ps.executeUpdate();
+
+			if(i == 1) {
+				return true;
+			}
+//			connection.close();
+			ps.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return false;
+	}
 
 	// Update the quantity of a given Product
 	@Override

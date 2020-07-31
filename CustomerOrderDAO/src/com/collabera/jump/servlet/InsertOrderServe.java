@@ -9,23 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.collabera.jump.CustomerApp.Customer;
 import com.collabera.jump.CustomerApp.CustomerAppDAO;
 import com.collabera.jump.CustomerApp.CustomerAppDAOClass;
 import com.collabera.jump.CustomerApp.Orders;
-import com.collabera.jump.CustomerApp.Product;
 
 /**
- * Servlet implementation class CustomerAppHubServe
+ * Servlet implementation class InsertOrderServe
  */
-@WebServlet("/CustomerAppHubServe")
-public class CustomerAppHubServe extends HttpServlet {
+@WebServlet("/InsertOrderServe")
+public class InsertOrderServe extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CustomerAppHubServe() {
+    public InsertOrderServe() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,6 +35,38 @@ public class CustomerAppHubServe extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		CustomerAppDAO cuAppDAO = new CustomerAppDAOClass();
 		
+		int orderNum = 0;
+		int customerCode = 0;
+		int productCode = 0;
+		int orderPrice = 0;
+		int orderQuantity = 0;
+		
+		if (request.getParameter("orderNum") != null) {
+			orderNum = Integer.valueOf(request.getParameter("orderNum"));
+		}
+		
+		if (request.getParameter("customerCode") != null) {
+			customerCode = Integer.valueOf(request.getParameter("customerCode"));
+		}
+		
+		if (request.getParameter("productCode") != null) {
+			productCode = Integer.valueOf(request.getParameter("productCode"));
+		}
+		
+		if (request.getParameter("orderPrice") != null) {
+			orderPrice = Integer.valueOf(request.getParameter("orderPrice"));
+		}
+		
+		if (request.getParameter("orderQuantity") != null) {
+			orderQuantity = Integer.valueOf(request.getParameter("orderQuantity"));
+		}
+		
+		if (request.getParameter("orderNum") != null) {
+			if (cuAppDAO.insertNewOrder(orderNum, customerCode, productCode, orderPrice, orderQuantity)) {
+				System.out.println("New Order added");
+			}
+		}
+		
 		out.println("<html><body>");
 		out.println("<center><table>"
 				+ "<th><a href=CustomerAppHubServe>Hub</a></th>"
@@ -46,41 +76,21 @@ public class CustomerAppHubServe extends HttpServlet {
 				+ "<th><a href=DeleteOrderServe>Delete Orders</a></th>"
 				+ "</table></center>");
 		
-		out.println("<table border=1><th>Customer Number</th><th>Customer Name</th><th>Address</th><th>City</th><th>Country</th>");
-		
-		for (Customer cu : cuAppDAO.getAllCustomers()) {
-			out.println(cu);
-		}
-		
-		out.println("</table>");
-		out.println("<table border=1><th>Product Code</th><th>Product Name</th><th>Product Price</th><th>Product Quantity</th>");
-		
-		for (Product pr : cuAppDAO.getAllProducts()) {
-			out.println(pr);
-		}
-		
-		out.println("</table>");
 		out.println("<table border=1><th>Order Number</th><th>Customer Number</th><th>Product Code</th><th>Order Price</th><th>Order Quantity</th>");
 		
 		for (Orders or : cuAppDAO.getAllOrders()) {
 			out.println(or);
 		}
 		
-		out.println("</table>");
-		
-		out.println("<table border=1><th>Customer</th><th>Purchased</th>");
-		for (Orders or : cuAppDAO.getCustomersAndProducts()) {
-			out.println("<tr><td>" + or.getCustomer().getCustomerName() + "</td>"
-					+ "<td>" + or.getProduct().getProductName() + "</td></tr>");
-		}
-		
-		out.println("</table>");
-		
-		Product mostExpenPro = cuAppDAO.getMostExpensivePurchasedProduct();
-		out.println("<table border=1><th colspan=2>Most Expensive Product</th>"
-				+ "<tr><td>Product</td><td>Price</td></tr>"
-				+ "<tr><td>" + mostExpenPro.getProductName() + "</td>"
-				+ "<td>" + mostExpenPro.getProductPrice() + "</td></tr>");
+		out.println("<form name=insertOrderForm action=InsertOrderServe method=GET>");
+		out.println("<table><th>Order Number</th><th>Customer Code</th><th>Product Code</th><th>Order Price</th><th>Order Quantity</th>");
+			out.println("<tr><td><input type=number name=orderNum required></td>");
+			out.println("<td><input type=number name=customerCode required></td>");
+			out.println("<td><input type=number name=productCode required></td>");
+			out.println("<td><input type=number name=orderPrice required></td>");
+			out.println("<td><input type=number name=orderQuantity required></td>");
+			out.println("<td><input type=submit value=Insert></td></tr>");
+		out.println("</form>");
 		
 		out.println("</table>");
 		
